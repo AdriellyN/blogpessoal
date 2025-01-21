@@ -17,7 +17,8 @@ export class PostagemService{
     async findAll(): Promise<Postagem[]>{
         return this.postagemRepository.find({
             relations:{
-                tema: true
+                tema: true,
+                usuario: true
             }
         });  // SELECT * FROM tb_postagens;
     }
@@ -31,7 +32,8 @@ export class PostagemService{
                 id
             },
             relations:{
-                tema: true
+                tema: true,
+                usuario: true
             }
         })
 
@@ -48,7 +50,8 @@ export class PostagemService{
                 titulo: ILike(`%${titulo}%`) // Insensitive Like - Ignora a sensitividade do banco e procura de forma insensitiva
             },
             relations:{
-                tema: true
+                tema: true,
+                usuario: true
             }
         });
     }
@@ -61,6 +64,10 @@ export class PostagemService{
     }
 
     async update(postagem: Postagem): Promise<Postagem>{
+        
+        // Verificação se o id da postagem já existe
+        if(!postagem.id || postagem.id <= 0)
+            throw new HttpException("Postagem inválida!", HttpStatus.BAD_REQUEST)
         
         await this.findById(postagem.id)
 
