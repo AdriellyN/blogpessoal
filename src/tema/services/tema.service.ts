@@ -33,7 +33,7 @@ export class TemaService{
         })
 
         if(!tema){
-            throw new HttpException('Tema não encontrada!', HttpStatus.NOT_FOUND)
+            throw new HttpException('Tema não encontrado!', HttpStatus.NOT_FOUND)
         }
         return tema;
         
